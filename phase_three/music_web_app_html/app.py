@@ -84,6 +84,25 @@ def add():
     return ','.join(predefined_names)
 
 
+@app.route('/albums', methods=['GET'])
+def get_album():
+    connection = get_flask_database_connection(app)
+    repository = AlbumRepository(connection)
+    albums = repository.all()
+    return render_template("albums/index.html", albums=albums)
+    # albums_names = []
+    # for result in results:
+    #     albums_names.append(result)
+    # return ', '.join(albums_names)
+
+@app.route('/')
+def get_main():
+    return render_template("main.html")
+
+@app.route('/about')
+def get_about():
+    return render_template('about.html')
+
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
 # if started in test mode.

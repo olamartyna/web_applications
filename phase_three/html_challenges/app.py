@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, render_template
 from lib.database_connection import get_flask_database_connection
+import random
 
 # Create a new Flask app
 app = Flask(__name__)
@@ -36,6 +37,17 @@ from example_routes import apply_example_routes
 apply_example_routes(app)
 
 # == End Example Code ==
+
+#   GET /greet?name=Kay
+@app.route('/greet')
+def greet():
+    name = request.args.get('name')
+    return render_template('greet.html', name=name)
+
+
+@app.route('/weather', methods=['GET'])
+def get_weather():
+    return render_template('weather.html', weather = random.randint(0, 1000))
 
 # These lines start the server if you run this file directly
 # They also start the server configured to use the test database
